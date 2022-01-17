@@ -1,0 +1,47 @@
+<odoo>
+
+    <record model="ir.actions.act_window" id="action_frame">
+        <field name="name">Jours</field>
+        <field name="res_model">ln.attendance.frame</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="ln_frame_tree" model="ir.ui.view">
+        <field name="name">ln.frame.tree</field>
+        <field name="model">ln.attendance.frame</field>
+        <field name="arch" type="xml">
+            <tree string="Plages horaires">
+                <field name="name"/>
+                <field name="all_day"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ln_frame_form">
+        <field name="name">ln.frame.form</field>
+        <field name="model">ln.attendance.frame</field>
+        <field name="arch" type="xml">
+            <form string="Calcul">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="all_day"/>
+                        </group>
+                        <group>
+                            <field name="start_hour" attrs="{'invisible':[('all_day', '=', True)]}"/>
+                            <field name="start_minute" attrs="{'invisible':[('all_day', '=', True)]}"/>
+                            <field name="end_hour" attrs="{'invisible':[('all_day', '=', True)]}"/>
+                            <field name="end_minute" attrs="{'invisible':[('all_day', '=', True)]}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+
+
+</odoo>

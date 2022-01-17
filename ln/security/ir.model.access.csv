@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ln_planning_confirm_user,ln.ln.planning.confirm,model_ln_planning_confirm,base.group_user,1,1,1,1
+access_ln_planning_planning_confirm_user,ln.ln.planning.planning.confirm,model_ln_planning_planning_confirm,base.group_user,1,1,1,1
+access_ln_presence_cron_user,ln.ln.presence.cron,model_ln_presence_cron,base.group_user,1,1,1,1
+access_ln_attendance_rule_user,ln.ln.attendance.rule,model_ln_attendance_rule,base.group_user,1,1,1,1
+access_ln_employee_type_user,ln.ln.employee.type,model_ln_employee_type,base.group_user,1,1,1,1
+access_ln_day_user,ln.ln.day,model_ln_day,base.group_user,1,1,1,1
+access_ln_attendance_condition_user,ln.ln.attendance.condition,model_ln_attendance_condition,base.group_user,1,1,1,1
+access_ln_attendance_frame_user,ln.ln.attendance.frame,model_ln_attendance_frame,base.group_user,1,1,1,1

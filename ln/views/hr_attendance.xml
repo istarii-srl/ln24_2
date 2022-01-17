@@ -1,0 +1,40 @@
+<odoo>
+    <menuitem id="menu_hr_attendance_rules_root" name="Règles" parent="hr_attendance.menu_hr_attendance_root" sequence="11" groups="hr_attendance.group_hr_attendance_user"/>
+    <menuitem id="menu_hr_attendance_rules" name="Règles" parent="menu_hr_attendance_rules_root" sequence="1" action="ln_rules_action"/>
+    <menuitem id="menu_hr_attendance_frame" name="Plages horaires" parent="menu_hr_attendance_rules_root" sequence="2" action="action_frame"/>
+    <menuitem id="menu_hr_attendance_day" name="Jours" parent="menu_hr_attendance_rules_root" sequence="3" action="action_day"/>
+
+    <menuitem id="hr_attendance.menu_hr_attendance_attendances_overview" name="Attendances" parent="hr_attendance.menu_hr_attendance_root" sequence="1" groups="hr_attendance.group_hr_attendance" action="hr_attendance.hr_attendance_action_overview"/>
+    <menuitem id="hr_attendance.menu_hr_attendance_kiosk_no_user_mode" name="Kiosk Mode" parent="hr_attendance.menu_hr_attendance_root" sequence="10" groups="hr_attendance.group_hr_attendance_kiosk" action="hr_attendance.hr_attendance_action_kiosk_mode"/>
+    <menuitem id="hr_attendance.menu_hr_attendance_my_attendances" name="Check In / Check Out" parent="hr_attendance.menu_hr_attendance_root" sequence="10" groups="hr_attendance.group_hr_attendance" action="hr_attendance.hr_attendance_action_my_attendances"/>
+    <menuitem id="hr_attendance.menu_hr_attendance_view_attendances" name="Attendances" parent="hr_attendance.menu_hr_attendance_root" sequence="1" groups="hr_attendance.group_hr_attendance_user" action="hr_attendance.hr_attendance_action"/>
+
+
+    <record id="ln_attendance_tree" model="ir.ui.view">
+        <field name="name">ln.attendance.tree.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="worked_hours" position="before">
+                <field name="attendance_hours" readonly="1"/>
+                <field name="rest_hours"/>
+                <field name="done_hours" readonly="1"/>
+                <field name="rule_name" readonly="1"/>
+            </field>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.server" id="action_recompute_legal_hours">
+        <field name="name">Recalculer les heures légales</field>
+        <field name="model_id" ref="model_hr_attendance"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="binding_model_id" ref="model_hr_attendance" />
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = records.apply_rules()
+        </field>
+    </record>
+
+</odoo>

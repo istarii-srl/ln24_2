@@ -1,0 +1,16 @@
+<odoo>
+    <record id="ln_planning_view_gantt" model="ir.ui.view">
+        <field name="name">ln.planning.slot.gantt</field>
+        <field name="model">planning.slot</field>
+        <field name="inherit_id" ref="planning.planning_view_gantt"/>
+        <field name="arch" type="xml">
+            <field name="allocated_hours" position="after">
+                <field name="confirm_status" invisible="1"/>
+            </field>
+            <xpath expr="//gantt" position="attributes">
+                <attribute name="decoration-danger">overlap_slot_count > 0 or confirm_status == 'refused'</attribute>
+                <attribute name="decoration-warning">confirm_status == 'to_confirm'</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

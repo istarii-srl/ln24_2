@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+
+        <record id="ln_frame_all" model="ln.attendance.frame">
+            <field name="name">Toute la journée</field>
+            <field name="all_day">1</field>
+        </record>
+
+        <record id="ln_frame_pre_six" model="ln.attendance.frame">
+            <field name="name">Avant 6h</field>
+            <field name="all_day">0</field>
+            <field name="end_hour">5</field>
+            <field name="end_minute">59</field>
+        </record>
+
+        <record id="ln_frame_post_six" model="ln.attendance.frame">
+            <field name="name">Après 6h</field>
+            <field name="all_day">0</field>
+            <field name="start_hour">6</field>
+            <field name="end_hour">23</field>
+            <field name="end_minute">59</field>
+        </record>
+
+        <record id="ln_frame_all" model="ln.attendance.frame">
+            <field name="name">Toute la journée</field>
+            <field name="all_day">1</field>
+        </record>
+
+        <record id="ln_day_all_N" model="ln.day">
+            <field name="name">Tous</field>
+            <field name="day_position">1</field>
+            <field name="include_all">1</field>
+        </record>
+
+        <record id="ln_day_monday_N" model="ln.day">
+            <field name="name">Lundi</field>
+            <field name="day_position">1</field>
+        </record>
+
+        <record id="ln_day_tuesday_N" model="ln.day">
+            <field name="name">Mardi</field>
+            <field name="day_position">2</field>
+        </record>
+
+
+        <record id="ln_day_wednesday_N" model="ln.day">
+            <field name="name">Mercredi</field>
+            <field name="day_position">3</field>
+        </record>
+
+
+        <record id="ln_day_thursday_N" model="ln.day">
+            <field name="name">Jeudi</field>
+            <field name="day_position">4</field>
+        </record>
+
+
+        <record id="ln_day_friday_N" model="ln.day">
+            <field name="name">Vendredi</field>
+            <field name="day_position">5</field>
+        </record>
+
+        <record id="ln_day_saturday_N" model="ln.day">
+            <field name="name">Samedi</field>
+            <field name="day_position">6</field>
+        </record>
+
+
+        <record id="ln_day_sunday_N" model="ln.day">
+            <field name="name">Dimanche</field>
+            <field name="day_position">7</field>
+        </record>
+
+
+
+    </data>
+</odoo>

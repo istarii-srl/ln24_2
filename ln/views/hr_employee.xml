@@ -1,0 +1,16 @@
+<odoo>
+
+    <record model="ir.ui.view" id="ln_employee_form">
+        <field name="name">ln.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="planning.hr_employee_view_form_inherit" />
+        <field name="arch" type="xml">
+            <group name="planning" position="after">
+                <group string="Présence">
+                    <field name="ln_employee_type_id"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

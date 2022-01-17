@@ -1,0 +1,35 @@
+<odoo>
+    <record model="ir.actions.act_window" id="action_day">
+        <field name="name">Jours</field>
+        <field name="res_model">ln.day</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="ln_day_tree" model="ir.ui.view">
+        <field name="name">ln.day.tree</field>
+        <field name="model">ln.day</field>
+        <field name="arch" type="xml">
+            <tree string="Journées">
+                <field name="name"/>
+                <field name="day_position"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ln_day_form">
+        <field name="name">ln.day.form</field>
+        <field name="model">ln.day</field>
+        <field name="arch" type="xml">
+            <form string="Calcul">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="include_all"/>
+                        <field name="day_position" attrs="{'invisible': [('include_all', '=', True)]}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

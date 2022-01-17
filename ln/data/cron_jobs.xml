@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="ir_cron_ln_sync_presence" model="ir.cron">
+            <field name="name">Synchronise planning with presence</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field name="model_id" ref="ln.model_ln_presence_cron"/>
+            <field name="state">code</field>
+            <field name="code">model.run_cron()</field>
+            <field name="nextcall" eval="(DateTime.now().replace(hour=3, minute=0) + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />
+        </record>
+    </data>
+</odoo>
