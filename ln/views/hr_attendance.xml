@@ -19,6 +19,7 @@
                 <field name="attendance_hours" readonly="1"/>
                 <field name="rest_hours"/>
                 <field name="done_hours" readonly="1"/>
+                <field name="rule_id" invisible="1"/>
                 <field name="rule_name" readonly="1"/>
             </field>
         </field>

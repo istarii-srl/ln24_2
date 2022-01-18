@@ -14,7 +14,7 @@
                 <field name="confirm_status"/>
             </field>
             <field name="allocated_hours" position="after">
-                <field name="rest_time" attrs="{'invisible': [('has_rest', '=', True)]}"/>
+                <field name="rest_time" attrs="{'invisible': [('has_rest', '=', False)]}"/>
             </field>
         </field>
     </record>
