@@ -61,6 +61,7 @@ class PresenceCron(models.Model):
                         attendance.on_done_hours_changed()
                         
                     else:
+                        _logger.info("only 1 day")
                         attendance = self.env["hr.attendance"].create({
                             "check_in": slot.start_datetime,
                             "check_out": slot.end_datetime,
@@ -75,4 +76,4 @@ class PresenceCron(models.Model):
                         attendance.on_done_hours_changed()
                     slot.has_synced = True
                 except:
-                    pass
+                    _logger.info("problem")
