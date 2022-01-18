@@ -1,7 +1,7 @@
 from odoo import fields, api, models
 import datetime
 import logging
-import zoneinfo
+import pytz
 _logger = logging.getLogger(__name__)
 
 
@@ -24,17 +24,17 @@ class PresenceCron(models.Model):
                     if slot.start_datetime.date() != slot.end_datetime.date():
                         attendance = self.env["hr.attendance"].create({
                             "check_in": slot.start_datetime,
-                            "check_out": datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 23, 59, tzinfo=zoneinfo.ZoneInfo("Europe/Berlin")),
+                            "check_out": datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 23, 59, tzinfo=pytz.timezone('Europe/Paris')),
                             "employee_id": slot.employee_id.id,
                             "shift_id": slot.id,
                             "rest_hours": slot.rest_time,
                         })
                         attendance.apply_rules()
-                        new_day = datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 0, 0, tzinfo=zoneinfo.ZoneInfo("Europe/Berlin")) + datetime.timedelta(days=1)
+                        new_day = datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 0, 0, tzinfo=pytz.timezone('Europe/Paris')) + datetime.timedelta(days=1)
                         while new_day.date() != slot.end_datetime.date():
                             attendance = self.env["hr.attendance"].create({
                                 "check_in": new_day,
-                                "check_out": datetime.datetime(new_day.year, new_day.month, slot.new_day.day, 23, 59, tzinfo=zoneinfo.ZoneInfo("Europe/Berlin")),
+                                "check_out": datetime.datetime(new_day.year, new_day.month, slot.new_day.day, 23, 59, tzinfo=pytz.timezone('Europe/Paris')),
                                 "employee_id": slot.employee_id.id,
                                 "shift_id": slot.id,
                                 "rest_hours": slot.rest_time,
