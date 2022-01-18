@@ -39,7 +39,7 @@ class AttendanceRule(models.Model):
             res = 0
             deduct_condi_id = rule.get_deduct_condi_id(attendance)
             for condi in rule.condition_ids:
-                res += condi.get_legal_hours(attendance, deduct_condi_id)
+                res += condi.get_legal_hours(attendance, deduct_condi_id.id)
             return res
 
     def check_employee_match(self, employee):
