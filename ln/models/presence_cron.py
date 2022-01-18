@@ -37,7 +37,7 @@ class PresenceCron(models.Model):
                     while new_day.date() != slot.end_datetime.date():
                         attendance = self.env["hr.attendance"].create({
                             "check_in": new_day - datetime.timedelta(seconds=3600),
-                            "check_out": datetime.datetime(new_day.year, new_day.month, slot.new_day.day, 0, 0, 0) - datetime.timedelta(seconds=3600),
+                            "check_out": datetime.datetime(new_day.year, new_day.month, new_day.day, 0, 0, 0) + datetime.timedelta(days=1) - datetime.timedelta(seconds=3600),
                             "employee_id": slot.employee_id.id,
                             "shift_id": slot.id,
                         })
