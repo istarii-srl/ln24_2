@@ -51,7 +51,6 @@ class Attendance(models.Model):
                     if rule.does_rule_match_attendance(attendance):
                         hours = rule.get_legal_hours(attendance)
                         attendance.rule_id = rule
-                        attendance.rule_name = rule.name
                         attendance.worked_hours = hours
                         break
             except:
