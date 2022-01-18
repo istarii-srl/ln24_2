@@ -7,7 +7,7 @@ class Attendance(models.Model):
     _inherit = "hr.attendance"
 
     done_hours = fields.Float(string="Heures prestées", compute="_compute_done_hours", store=True)
-    attendance_hours = fields.Float(string="Temps de travail", compute="_compute_worked_hours")
+    attendance_hours = fields.Float(string="Temps de travail", compute="_compute_worked_hours", store=True, readonly=True)
 
     rest_hours = fields.Float(string="Temps de pause")
     worked_hours = fields.Float(string="Heures légales", readonly=False)
