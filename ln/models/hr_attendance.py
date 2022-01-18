@@ -44,14 +44,14 @@ class Attendance(models.Model):
 
     def apply_rules(self):
         for attendance in self:
-            try:
-                rules = self.env["ln.attendance.rule"].search([])
-                rules = sorted(rules, key= lambda x: x.sequence)
-                for rule in rules:
-                    if rule.does_rule_match_attendance(attendance):
-                        hours = rule.get_legal_hours(attendance)
-                        attendance.rule_id = rule
-                        attendance.worked_hours = hours
-                        break
-            except:
-                pass
+            #try:
+            rules = self.env["ln.attendance.rule"].search([])
+            rules = sorted(rules, key= lambda x: x.sequence)
+            for rule in rules:
+                if rule.does_rule_match_attendance(attendance):
+                    hours = rule.get_legal_hours(attendance)
+                    attendance.rule_id = rule
+                    attendance.worked_hours = hours
+                    break
+            #except:
+            #    pass
