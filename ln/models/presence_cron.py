@@ -40,7 +40,6 @@ class PresenceCron(models.Model):
                             "check_out": datetime.datetime(new_day.year, new_day.month, slot.new_day.day, 0, 0) - datetime.timedelta(seconds=3600),
                             "employee_id": slot.employee_id.id,
                             "shift_id": slot.id,
-                            "rest_hours": slot.rest_time,
                         })
                         attendance.apply_rules()
                         attendance._compute_worked_hours()
@@ -52,7 +51,6 @@ class PresenceCron(models.Model):
                         "check_out": slot.end_datetime,
                         "employee_id": slot.employee_id.id,
                         "shift_id": slot.id,
-                        "rest_hours": slot.rest_time,
                     })
                     
                     attendance.apply_rules()
