@@ -31,7 +31,7 @@ class Attendance(models.Model):
     @api.depends('worked_hours','rest_hours')
     def _compute_done_hours(self):
         for attendance in self:
-            attendance.done_hours = attendance.worked_hours - attendance.rest_hours
+            attendance.done_hours = attendance.attendance_hours - attendance.rest_hours
 
     @api.depends('check_in', 'check_out')
     def _compute_worked_hours(self):
