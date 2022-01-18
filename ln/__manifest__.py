@@ -17,7 +17,7 @@
     # for the full list
     'category': 'ERP',
     'license': 'OPL-1',
-    'version': '15.0.0.131',
+    'version': '15.0.0.132',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'planning', 'contacts', 'hr_attendance', 'hr', 'hr_holidays'],
