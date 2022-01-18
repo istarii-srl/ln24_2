@@ -28,7 +28,7 @@ class Attendance(models.Model):
             if not attendance.rule_id:
                 attendance.worked_hours = attendance.done_hours
 
-    @api.depends('worked_hours','rest_hours')
+    @api.depends('attendance_hours','rest_hours')
     def _compute_done_hours(self):
         for attendance in self:
             attendance.done_hours = attendance.attendance_hours - attendance.rest_hours
