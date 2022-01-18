@@ -12,8 +12,8 @@ class PresenceCron(models.Model):
 
     def run_cron(self):
         _logger.info("Presence cron")
-        today_start = datetime.datetime.now(tzinfo=pytz.timezone('Europe/Paris')).replace(hour=0, minute=0, second=3)
-        today_end = datetime.datetime.now(tzinfo=pytz.timezone('Europe/Paris')).replace(hour=0, minute=0, second=2) + datetime.timedelta(days=1)
+        today_start = datetime.datetime.now(tzinfo=pytz.timezone('Europe/Paris')).replace(hour=0, minute=0, second=0) - datetime.timedelta(days=3)
+        today_end = datetime.datetime.now(tzinfo=pytz.timezone('Europe/Paris')).replace(hour=0, minute=0, second=3)
         slots = self.env["planning.slot"].search([("end_datetime", "<=", today_end), ("end_datetime", ">=", today_start), ('state', "=", "published")])
         _logger.info("number of slots")
         _logger.info(str(len(slots)))
