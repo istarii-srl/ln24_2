@@ -75,6 +75,7 @@
                             <field name="rule_id" invisible="1"/>
                             <field name="frame_id" options="{'no_create': True}"/>
                             <field name="value_type"/>
+                            <field name="should_deduct_rest_time_here"/>
                         </group>
                         <group>
                             <field name="percentage" widget="percentage" attrs="{'invisible':[('value_type', '=', 'fixed')]}"/>

@@ -19,11 +19,27 @@ class AttendanceRule(models.Model):
 
     condition_ids = fields.One2many(string="Conditions", comodel_name="ln.attendance.condition", inverse_name="rule_id")
 
+
+    def get_deduct_condi_id(self, attendance):
+        for rule in self:
+            res = None
+            for condi in rule.condition_ids:
+                if condi.should_deduct_rest_hours(attendance):
+                    return condi
+                elif condi.could_deduct_rest_hours(attendance):
+                    res = condi
+            if res:
+                return res
+            else:
+                return rule.condition_ids[0]
+            
+
     def get_legal_hours(self, attendance):
         for rule in self:
             res = 0
+            deduct_condi_id = rule.get_deduct_condi_id(attendance)
             for condi in rule.condition_ids:
-                res += condi.get_legal_hours(attendance)
+                res += condi.get_legal_hours(attendance, deduct_condi_id.id)
             return res
 
     def check_employee_match(self, employee):
@@ -70,14 +86,15 @@ class AttendanceRule(models.Model):
 
 class AttendanceCondition(models.Model):
     _name = "ln.attendance.condition"
-    _description = "Exprime une condition d'une règle"
+    _description = "Exprime un calcul d'une règle"
 
     name = fields.Char(string="Name", compute="_compute_name")
     frame_id = fields.Many2one(string="Plage horaire", comodel_name="ln.attendance.frame", required=True)
     value_type = fields.Selection(string="Type de valeur", selection=[("percentage", "Pourcentage"), ("fixed", "Valeur fixe"), ("fixed_percentage", ("Fixe * pourcentage"))], default="percentage", required=True)
     percentage = fields.Float(string="Pourcentage", default=1.0)
-    fixed_value = fields.Float(string="Valeur fixe")
+    fixed_value = fields.Float(string="Valeur fixe", default=0)
     rule_id = fields.Many2one(string="Règle", comodel_name="ln.attendance.rule", required=True)
+    should_deduct_rest_time_here = fields.Boolean(string="Déduire les heures de midi ici", default=False)
 
     sequence = fields.Integer(string="Pos.")
      
@@ -102,16 +119,31 @@ class AttendanceCondition(models.Model):
 
                 condi.name = text
 
-    def get_legal_hours(self, attendance):
+
+    def could_deduct_rest_hours(self, attendance):
+        for condi in self:
+            hours = condi.frame_id.get_overlapping_hours(attendance.check_in, attendance.check_out)
+            return hours >= attendance.rest_hours
+
+    def should_deduct_rest_hours(self, attendance):
+        for condi in self:
+            hours = condi.frame_id.get_overlapping_hours(attendance.check_in, attendance.check_out)
+            return hours >= attendance.rest_hours and condi.should_deduct_rest_time_here
+
+    def get_legal_hours(self, attendance, condi_id):
         for condi in self:
             hours = condi.frame_id.get_overlapping_hours(attendance.check_in, attendance.check_out)
             if hours > 0:
+                if condi_id == condi.id:
+                    hours = hours - attendance.rest_hours
                 if condi.value_type == "fixed":
                     return condi.fixed_value
                 elif condi.value_type == "fixed_percentage":
                     return condi.fixed_value * condi.percentage
                 else:
                     return condi.percentage * hours
+            else:
+                return 0
 
 
 class AttendanceFrame(models.Model):
