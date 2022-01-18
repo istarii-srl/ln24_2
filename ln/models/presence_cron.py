@@ -30,6 +30,9 @@ class PresenceCron(models.Model):
                             "rest_hours": slot.rest_time,
                         })
                         attendance.apply_rules()
+                        attendance._compute_worked_hours()
+                        attendance._compute_done_hours()
+                        attendance.on_done_hours_changed()
                         new_day = datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 0, 0, tzinfo=pytz.timezone('Europe/Paris')) + datetime.timedelta(days=1)
                         while new_day.date() != slot.end_datetime.date():
                             attendance = self.env["hr.attendance"].create({
@@ -40,6 +43,9 @@ class PresenceCron(models.Model):
                                 "rest_hours": slot.rest_time,
                             })
                             attendance.apply_rules()
+                            attendance._compute_worked_hours()
+                            attendance._compute_done_hours()
+                            attendance.on_done_hours_changed()
                             new_day = new_day + datetime.timedelta(days=1)
                         attendance = self.env["hr.attendance"].create({
                             "check_in": new_day,
@@ -48,7 +54,11 @@ class PresenceCron(models.Model):
                             "shift_id": slot.id,
                             "rest_hours": slot.rest_time,
                         })
+                        
                         attendance.apply_rules()
+                        attendance._compute_worked_hours()
+                        attendance._compute_done_hours()
+                        attendance.on_done_hours_changed()
                         
                     else:
                         attendance = self.env["hr.attendance"].create({
@@ -58,7 +68,11 @@ class PresenceCron(models.Model):
                             "shift_id": slot.id,
                             "rest_hours": slot.rest_time,
                         })
+                        
                         attendance.apply_rules()
+                        attendance._compute_worked_hours()
+                        attendance._compute_done_hours()
+                        attendance.on_done_hours_changed()
                     slot.has_synced = True
                 except:
                     pass
