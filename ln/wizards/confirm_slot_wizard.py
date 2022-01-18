@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from calendar import month
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError
 import datetime
@@ -26,6 +27,7 @@ class PlanningConfirm(models.TransientModel):
 
     def get_default_end_date(self):
         now = datetime.datetime.now()
+        now = datetime.datetime(year= now.year, month= now.month, day= now.day)
         start = now + datetime.timedelta(7-now.weekday())
         return start + relativedelta(month=+4)
 
