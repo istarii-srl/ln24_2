@@ -20,60 +20,60 @@ class PresenceCron(models.Model):
         for slot in slots:
             _logger.info("in slot")
             if slot.employee_id and not slot.has_synced:
-                try:
-                    if slot.start_datetime.date() != slot.end_datetime.date():
-                        attendance = self.env["hr.attendance"].create({
-                            "check_in": slot.start_datetime,
-                            "check_out": datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 23, 59, tzinfo=utc),
-                            "employee_id": slot.employee_id.id,
-                            "shift_id": slot.id,
-                            "rest_hours": slot.rest_time,
-                        })
-                        attendance.apply_rules()
-                        attendance._compute_worked_hours()
-                        attendance._compute_done_hours()
-                        attendance.on_done_hours_changed()
-                        new_day = datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 0, 0, tzinfo=utc) + datetime.timedelta(days=1)
-                        while new_day.date() != slot.end_datetime.date():
-                            attendance = self.env["hr.attendance"].create({
-                                "check_in": new_day,
-                                "check_out": datetime.datetime(new_day.year, new_day.month, slot.new_day.day, 23, 59, tzinfo=utc),
-                                "employee_id": slot.employee_id.id,
-                                "shift_id": slot.id,
-                                "rest_hours": slot.rest_time,
-                            })
-                            attendance.apply_rules()
-                            attendance._compute_worked_hours()
-                            attendance._compute_done_hours()
-                            attendance.on_done_hours_changed()
-                            new_day = new_day + datetime.timedelta(days=1)
+                #try:
+                if slot.start_datetime.date() != slot.end_datetime.date():
+                    attendance = self.env["hr.attendance"].create({
+                        "check_in": slot.start_datetime,
+                        "check_out": datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 23, 59, tzinfo=utc),
+                        "employee_id": slot.employee_id.id,
+                        "shift_id": slot.id,
+                        "rest_hours": slot.rest_time,
+                    })
+                    attendance.apply_rules()
+                    attendance._compute_worked_hours()
+                    attendance._compute_done_hours()
+                    attendance.on_done_hours_changed()
+                    new_day = datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 0, 0, tzinfo=utc) + datetime.timedelta(days=1)
+                    while new_day.date() != slot.end_datetime.date():
                         attendance = self.env["hr.attendance"].create({
                             "check_in": new_day,
-                            "check_out": slot.end_datetime,
+                            "check_out": datetime.datetime(new_day.year, new_day.month, slot.new_day.day, 23, 59, tzinfo=utc),
                             "employee_id": slot.employee_id.id,
                             "shift_id": slot.id,
                             "rest_hours": slot.rest_time,
                         })
-                        
                         attendance.apply_rules()
                         attendance._compute_worked_hours()
                         attendance._compute_done_hours()
                         attendance.on_done_hours_changed()
-                        
-                    else:
-                        _logger.info("only 1 day")
-                        attendance = self.env["hr.attendance"].create({
-                            "check_in": slot.start_datetime,
-                            "check_out": slot.end_datetime,
-                            "employee_id": slot.employee_id.id,
-                            "shift_id": slot.id,
-                            "rest_hours": slot.rest_time,
-                        })
-                        
-                        attendance.apply_rules()
-                        attendance._compute_worked_hours()
-                        attendance._compute_done_hours()
-                        attendance.on_done_hours_changed()
-                    slot.has_synced = True
-                except:
-                    _logger.info("problem")
+                        new_day = new_day + datetime.timedelta(days=1)
+                    attendance = self.env["hr.attendance"].create({
+                        "check_in": new_day,
+                        "check_out": slot.end_datetime,
+                        "employee_id": slot.employee_id.id,
+                        "shift_id": slot.id,
+                        "rest_hours": slot.rest_time,
+                    })
+                    
+                    attendance.apply_rules()
+                    attendance._compute_worked_hours()
+                    attendance._compute_done_hours()
+                    attendance.on_done_hours_changed()
+                    
+                else:
+                    _logger.info("only 1 day")
+                    attendance = self.env["hr.attendance"].create({
+                        "check_in": slot.start_datetime,
+                        "check_out": slot.end_datetime,
+                        "employee_id": slot.employee_id.id,
+                        "shift_id": slot.id,
+                        "rest_hours": slot.rest_time,
+                    })
+                    
+                    attendance.apply_rules()
+                    attendance._compute_worked_hours()
+                    attendance._compute_done_hours()
+                    attendance.on_done_hours_changed()
+                slot.has_synced = True
+                #except:
+                #    _logger.info("problem")
