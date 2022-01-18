@@ -33,7 +33,7 @@ class PlanningConfirm(models.TransientModel):
     def _compute_slots_data(self):
         for wiz in self:
             wiz.slot_ids = self.env['planning.slot'].search([('start_datetime', '>=', wiz.start_datetime),
-                                                             ('end_datetime', '<=', wiz.end_datetime), ('confirm_status', '=', 'to_confirm')])
+                                                             ('end_datetime', '<=', wiz.end_datetime)])
             wiz.employee_ids = wiz.slot_ids.filtered(lambda s: s.resource_type == 'user').mapped('employee_id')
 
     def _inverse_employee_ids(self):
