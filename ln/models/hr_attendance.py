@@ -22,11 +22,11 @@ class Attendance(models.Model):
             obj.worked_hours = obj.done_hours
         return obj
 
-    @api.onchange('done_hours')
-    def on_done_hours_changed(self):
-        for attendance in self:
-            if not attendance.rule_id:
-                attendance.worked_hours = attendance.done_hours
+    #@api.onchange('done_hours')
+    #def on_done_hours_changed(self):
+    #    for attendance in self:
+    #        if not attendance.rule_id:
+    #            attendance.worked_hours = attendance.done_hours
 
     @api.depends('attendance_hours','rest_hours')
     def _compute_done_hours(self):
