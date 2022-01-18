@@ -1,3 +1,4 @@
+from re import M
 from lxml.builder import E
 from odoo import fields, api, models
 
@@ -11,6 +12,7 @@ class Attendance(models.Model):
     rest_hours = fields.Float(string="Temps de pause")
     worked_hours = fields.Float(string="Heures légales", readonly=False)
     rule_id = fields.Many2one(string="Règle", comodel_name="ln.attendance.rule")
+    shift_id = fields.Many2one(string="Shift", comodel_name="planning.slot")
     rule_name = fields.Char(string="Nom de la règle appliquée", readonly=True, related="rule_id.name")
 
     @api.model

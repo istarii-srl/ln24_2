@@ -25,6 +25,7 @@ class PresenceCron(models.Model):
                             "check_in": slot.start_datetime,
                             "check_out": datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 23, 59),
                             "employee_id": slot.employee_id.id,
+                            "shift_id": slot.id,
                             "rest_hours": slot.rest_time,
                         })
                         attendance.apply_rules()
@@ -34,14 +35,16 @@ class PresenceCron(models.Model):
                                 "check_in": new_day,
                                 "check_out": datetime.datetime(new_day.year, new_day.month, slot.new_day.day, 23, 59),
                                 "employee_id": slot.employee_id.id,
+                                "shift_id": slot.id,
                                 "rest_hours": slot.rest_time,
                             })
                             attendance.apply_rules()
                             new_day = new_day + datetime.timedelta(days=1)
                         attendance = self.env["hr.attendance"].create({
                             "check_in": new_day,
-                            "check_out": slot.end_datetime.date(),
+                            "check_out": slot.end_datetime,
                             "employee_id": slot.employee_id.id,
+                            "shift_id": slot.id,
                             "rest_hours": slot.rest_time,
                         })
                         attendance.apply_rules()
@@ -51,6 +54,7 @@ class PresenceCron(models.Model):
                             "check_in": slot.start_datetime,
                             "check_out": slot.end_datetime,
                             "employee_id": slot.employee_id.id,
+                            "shift_id": slot.id,
                             "rest_hours": slot.rest_time,
                         })
                         attendance.apply_rules()
