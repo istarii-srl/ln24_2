@@ -52,7 +52,7 @@ class AttendanceRule(models.Model):
     def check_day_match(self, in_time, out_time):
         for rule in self:
             for allowed_day in rule.day_ids:
-                if allowed_day.include_all or in_time.weekday()+1 == allowed_day.day_position:
+                if allowed_day.include_all or out_time.weekday()+1 == allowed_day.day_position:
                     return True
             return False
     
@@ -61,7 +61,7 @@ class AttendanceRule(models.Model):
             holidays = self.env["resource.calendar.leaves"].search([])
             is_holiday = False
             for holiday in holidays:
-                if holiday.date_from.date() == in_time.date() or holiday.date_to.date() == in_time.date():
+                if holiday.date_from.date() == out_time.date() or holiday.date_to.date() == out_time.date():
                     is_holiday = True
             if rule.activity_holidays == "only" and is_holiday:
                 return True
