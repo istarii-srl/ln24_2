@@ -32,7 +32,7 @@ class PresenceCron(models.Model):
                     attendance.apply_rules()
                     attendance._compute_worked_hours()
                     attendance._compute_done_hours()
-                    attendance.on_done_hours_changed()
+                    #attendance.on_done_hours_changed()
                     new_day = datetime.datetime(slot.start_datetime.year, slot.start_datetime.month, slot.start_datetime.day, 0, 0, 0) + datetime.timedelta(days=1)
                     while new_day.date() != slot.end_datetime.date():
                         attendance = self.env["hr.attendance"].create({
@@ -44,7 +44,7 @@ class PresenceCron(models.Model):
                         attendance.apply_rules()
                         attendance._compute_worked_hours()
                         attendance._compute_done_hours()
-                        attendance.on_done_hours_changed()
+                        #attendance.on_done_hours_changed()
                         new_day = new_day + datetime.timedelta(days=1)
                     attendance = self.env["hr.attendance"].create({
                         "check_in": new_day - datetime.timedelta(seconds=3600),
@@ -56,7 +56,7 @@ class PresenceCron(models.Model):
                     attendance.apply_rules()
                     attendance._compute_worked_hours()
                     attendance._compute_done_hours()
-                    attendance.on_done_hours_changed()
+                    #attendance.on_done_hours_changed()
                     
                 else:
                     _logger.info("only 1 day")
@@ -71,7 +71,7 @@ class PresenceCron(models.Model):
                     attendance.apply_rules()
                     attendance._compute_worked_hours()
                     attendance._compute_done_hours()
-                    attendance.on_done_hours_changed()
+                    #attendance.on_done_hours_changed()
                 slot.has_synced = True
                 #except:
                 #    _logger.info("problem")
