@@ -7,6 +7,7 @@ _logger = logging.getLogger(__name__)
 class AttendanceRule(models.Model):
     _name = "ln.attendance.rule"
     _description = "Règle de calcul des heures prestées pour les heures supplémentaires"
+    _order = 'sequence'
 
     name = fields.Char(string="Nom")
     matching_type = fields.Selection(string="Matching condition type", selection=[("any", "Any"), ("all", "All")], default="all", required=True)
