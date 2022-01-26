@@ -4,7 +4,7 @@ class Resource(models.Model):
     _name = "resource.resource"
     _inherit = "resource.resource"
 
-    employee_single_id = fields.Many2one(string="Employé", comodel_name="hr.employee", compute="_compute_ref_employee")
+    employee_single_id = fields.Many2one(string="Employé ", comodel_name="hr.employee", compute="_compute_ref_employee", store=True)
 
 
     @api.depends("employee_id")
