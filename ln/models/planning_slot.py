@@ -16,6 +16,9 @@ class PlanningSlot(models.Model):
             if slot.template_id:
                 slot.has_rest = slot.template_id.has_rest
                 slot.rest_time = slot.template_id.rest_time
+            else:
+                slot.has_rest = False
+                slot.rest_time = 0.0
 
     @api.onchange('resource_id')
     def on_resource_change(self):
