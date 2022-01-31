@@ -8,7 +8,7 @@
                 <field name="confirm_status" invisible="1"/>
             </field>
             <xpath expr="//gantt" position="attributes">
-                <attribute name="decoration-danger">overlap_slot_count > 0 or confirm_status == 'refused'</attribute>
+                <attribute name="decoration-danger">confirm_status == 'refused'</attribute>
                 <attribute name="decoration-warning">confirm_status == 'to_confirm'</attribute>
             </xpath>
         </field>
