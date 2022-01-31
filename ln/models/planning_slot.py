@@ -5,11 +5,22 @@ class PlanningSlot(models.Model):
     _inherit = "planning.slot"
 
     slot_to_confirm = fields.Boolean(string="Slot à confirmer", default=True)
-    confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_assign", "À assigner"), ("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_assign")
+    confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_assign", "À assigner"), ("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], compute="_compute_confirm_status", readonly=False)
     has_synced = fields.Boolean(string="Est sync avec présence", default=False)
     has_rest = fields.Boolean(string="Pause dans le shift", compute="_compute_rest")
     rest_time = fields.Float(string="Temps de pause", compute="_compute_rest")
     synchro_attendance = fields.Boolean(string="Synchronisation avec Attendance", default=True)
+
+
+    @api.depends('resource_id', 'role_id')
+    def _compute_confirm_status(self):
+        for slot in self:
+            if slot.resource_id and slot.confirm_status == "to_assign":
+                slot.confirm_status = "to_confirm"
+            elif not slot.resource_id and slot.confirm_status != "to_assign":
+                slot.confirm_status = "to_assign"
+            else:
+                slot.confirm_status = slot.confirm_status
 
     @api.depends('template_id')
     def _compute_rest(self):
@@ -21,13 +32,13 @@ class PlanningSlot(models.Model):
                 slot.has_rest = False
                 slot.rest_time = 0.0
 
-    @api.onchange('resource_id')
-    def on_resource_change(self):
-        for slot in self:
-            if slot.resource_id:
-                slot.confirm_status = 'to_confirm'
-            else:
-                slot.confirm_status = 'to_assign'
+    #@api.onchange('resource_id')
+    #def on_resource_change(self):
+    #    for slot in self:
+    #        if slot.resource_id:
+    #            slot.confirm_status = 'to_confirm'
+    #        else:
+    #            slot.confirm_status = 'to_assign'
 
     @api.onchange('role_id')
     def _on_role_changed(self):
