@@ -42,7 +42,7 @@
                         </group>
                     </group>
                     <notebook>
-                        <page string="Conditions">
+                        <page string="Règles de calcul">
                             <field name="condition_ids"/>
                         </page>
                     </notebook>
@@ -79,7 +79,7 @@
                         </group>
                         <group>
                             <field name="percentage" widget="percentage" attrs="{'invisible':[('value_type', '=', 'fixed')]}"/>
-                            <field name="fixed_value" attrs="{'invisible':[('value_type', '=', 'percentage')]}"/>
+                            <field name="fixed_value" widget="float_time" attrs="{'invisible':[('value_type', '=', 'percentage')]}"/>
                         </group>
                     </group>
                 </sheet>
