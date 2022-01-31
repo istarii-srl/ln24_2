@@ -10,7 +10,7 @@
       }
     }
 
-    .decoration-secondary::after{
+    .decoration-secondary::before{
         content: '';
         @include size(20px, 16px);
         @include o-position-absolute(-11px, $left: -13px);
