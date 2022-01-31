@@ -24,7 +24,10 @@ class PlanningSlot(models.Model):
     @api.onchange('resource_id')
     def on_resource_change(self):
         for slot in self:
-            slot.confirm_status = 'to_confirm'
+            if slot.resource_id:
+                slot.confirm_status = 'to_confirm'
+            else:
+                slot.confirm_status = 'to_assign'
 
     @api.onchange('role_id')
     def _on_role_changed(self):
