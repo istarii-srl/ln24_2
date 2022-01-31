@@ -17,7 +17,7 @@
     # for the full list
     'category': 'ERP',
     'license': 'OPL-1',
-    'version': '15.0.0.164',
+    'version': '15.0.0.165',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'planning', 'contacts', 'hr_attendance', 'hr', 'hr_holidays'],
@@ -45,6 +45,7 @@
         ],
         'web.assets_backend': [
             'ln/static/src/js/planning_buttons.js',
+            'ln/static/src/scss/ln.scss',
         ],
         'web.assets_qweb': [
             'ln/static/src/xml/planning_buttons.xml',

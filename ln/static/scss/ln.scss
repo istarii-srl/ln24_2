@@ -1,0 +1,11 @@
+.o_planning_gantt {
+    .o_gantt_pill {
+        &:not(.decoration-danger) {
+            &:not(.decoration-warning) {
+                &.decoration-info::before {
+                    content: '';
+                }
+            }
+        }
+    }
+}
