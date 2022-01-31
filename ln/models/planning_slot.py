@@ -25,3 +25,16 @@ class PlanningSlot(models.Model):
     def on_resource_change(self):
         for slot in self:
             slot.confirm_status = 'to_confirm'
+
+    @api.onchange('role_id')
+    def _on_role_changed(self):
+        for slot in self:
+            if slot.role_id:
+                return {'domain': {'resource_id': [('employee_single_id', 'in', slot.role_id.employee_ids.ids)]}}
+
+    @api.onchange('resource_id')
+    def _on_resource_changed(self):
+        for slot in self:
+            if slot.resource_id:
+                return {'domain': {'role_id': [('id', 'in', slot.resource_id.planning_role_ids.ids)]}}
+
