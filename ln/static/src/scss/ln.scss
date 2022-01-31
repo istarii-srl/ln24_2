@@ -1,11 +1,23 @@
 .o_planning_gantt {
-    .o_gantt_pill {
-        &:not(.decoration-danger) {
-            &:not(.decoration-warning) {
-                &.decoration-info::before {
-                    content: '' !important;
-                }
-            }
+  .o_gantt_pill {
+    &:not(.decoration-danger) {
+      &:not(.decoration-warning) {
+        &:not(.decoration-secondary) {
+          &.decoration-info::before {
+            content: none !important;
+          }
         }
+      }
     }
+
+    .decoration-secondary::after{
+        content: '';
+        @include size(20px, 16px);
+        @include o-position-absolute(-11px, $left: -13px);
+        box-shadow: 1px 1px 0 white;
+        background: rgba($color: blue, $alpha: 0.8);
+        transform: rotate(45deg);
+    }
+
+  }
 }
