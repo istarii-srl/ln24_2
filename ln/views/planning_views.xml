@@ -2,6 +2,7 @@
     <record id="ln_planning_view_gantt" model="ir.ui.view">
         <field name="name">ln.planning.slot.gantt</field>
         <field name="model">planning.slot</field>
+        <field name="priority">5</field>
         <field name="inherit_id" ref="planning.planning_view_gantt"/>
         <field name="arch" type="xml">
             <field name="allocated_hours" position="after">
