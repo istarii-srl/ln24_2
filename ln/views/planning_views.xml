@@ -10,7 +10,7 @@
 
             <xpath expr="//gantt" position="attributes">
                 <attribute name="decoration-secondary">confirm_status == 'to_assign'</attribute>
-                <attribute name="decoration-danger">confirm_status == 'refused'</attribute>
+                <attribute name="decoration-danger">overlap_slot_count > 0 or confirm_status == 'refused'</attribute>
                 <attribute name="decoration-warning">confirm_status == 'to_confirm'</attribute>
                 <attribute name="decoration-info">state == 'draft'</attribute>
             </xpath>
