@@ -3,7 +3,7 @@
         &:not(.decoration-danger) {
             &:not(.decoration-warning) {
                 &.decoration-info::before {
-                    content: '';
+                    content: '' !important;
                 }
             }
         }
