@@ -5,7 +5,8 @@ class PlanningSlot(models.Model):
     _inherit = "planning.slot"
 
     slot_to_confirm = fields.Boolean(string="Slot à confirmer", default=True)
-    confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_assign", "À assigner"), ("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], compute="_compute_confirm_status", readonly=False)
+    confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_assign", "À assigner"), ("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_assign", readonly=False)
+    confirm_status_auto = fields.Selection(string="Statut de confirmation", selection=[("to_assign", "À assigner"), ("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], compute="_compute_confirm_status")
     has_synced = fields.Boolean(string="Est sync avec présence", default=False)
     has_rest = fields.Boolean(string="Pause dans le shift", compute="_compute_rest")
     rest_time = fields.Float(string="Temps de pause", compute="_compute_rest")
@@ -15,12 +16,14 @@ class PlanningSlot(models.Model):
     @api.depends('resource_id', 'role_id')
     def _compute_confirm_status(self):
         for slot in self:
-            if slot.resource_id and slot.confirm_status == "to_assign":
+            if slot.resource_id and slot.confirm_status_auto == "to_assign":
+                slot.confirm_status_auto = "to_confirm"
                 slot.confirm_status = "to_confirm"
-            elif not slot.resource_id and slot.confirm_status != "to_assign":
+            elif not slot.resource_id and slot.confirm_status_auto != "to_assign":
+                slot.confirm_status_auto = "to_assign"
                 slot.confirm_status = "to_assign"
             else:
-                slot.confirm_status = slot.confirm_status
+                slot.confirm_status_auto = slot.confirm_status
 
     @api.depends('template_id')
     def _compute_rest(self):
