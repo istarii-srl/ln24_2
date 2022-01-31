@@ -5,7 +5,7 @@ class PlanningSlot(models.Model):
     _inherit = "planning.slot"
 
     slot_to_confirm = fields.Boolean(string="Slot à confirmer", default=True)
-    confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_confirm")
+    confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_assign", "À assigner"), ("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_assign")
     has_synced = fields.Boolean(string="Est sync avec présence", default=False)
     has_rest = fields.Boolean(string="Pause dans le shift", compute="_compute_rest")
     rest_time = fields.Float(string="Temps de pause", compute="_compute_rest")
