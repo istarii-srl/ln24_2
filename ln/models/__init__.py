@@ -6,3 +6,4 @@ from . import hr_attendance
 from . import attendance_rule
 from . import day
 from . import resource
+from . import planning_template

@@ -1,0 +1,16 @@
+<odoo>
+
+    <record id="ln_planning_template_form" model="ir.ui.view">
+        <field name="name">ln.planning.template.form.inherit</field>
+        <field name="model">planning.slot.template</field>
+        <field eval="8" name="priority"/>
+        <field name="inherit_id" ref="planning.planning_slot_template_view_form"/>
+        <field name="arch" type="xml">
+            <field name="role_id" position="after">
+                <field name="has_rest"/>
+                <field name="rest_time" widget="float_time" attrs="{'invisible': [('has_rest', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

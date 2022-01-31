@@ -7,8 +7,15 @@ class PlanningSlot(models.Model):
     slot_to_confirm = fields.Boolean(string="Slot à confirmer", default=True)
     confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_confirm")
     has_synced = fields.Boolean(string="Est sync avec présence", default=False)
-    has_rest = fields.Boolean(string="Pause dans le shift", default = False)
-    rest_time = fields.Float(string="Temps de pause", default = 0.0)
+    has_rest = fields.Boolean(string="Pause dans le shift", compute="_compute_rest")
+    rest_time = fields.Float(string="Temps de pause", compute="_compute_rest")
+
+    @api.depens('template_id')
+    def _compute_rest(self):
+        for slot in self:
+            if slot.template_id:
+                slot.has_rest = slot.template_id.has_rest
+                slot.rest_time = slot.template_id.rest_time
 
     @api.onchange('resource_id')
     def on_resource_change(self):

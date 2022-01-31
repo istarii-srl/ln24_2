@@ -17,7 +17,7 @@
     # for the full list
     'category': 'ERP',
     'license': 'OPL-1',
-    'version': '15.0.0.151',
+    'version': '15.0.0.152',
 
     # any module necessary for this one to work correctly
     'depends': ['base', 'planning', 'contacts', 'hr_attendance', 'hr', 'hr_holidays'],
@@ -34,6 +34,7 @@
         'views/frame.xml',
         'views/planning_views.xml',
         'views/planning_templates.xml',
+        'views/planning_template',
         'views/hr_attendance.xml',
         'wizards/confirm_slot_wizard.xml',
         'security/ir.model.access.csv',
