@@ -10,6 +10,7 @@
             <field name="allow_template_creation" position="after">
                 <field name="slot_to_confirm" invisible="1"/>
                 <field name="has_synced" invisible="1"/>
+                <field name="synchro_attendance"/>
                 <field name="has_rest"/>
                 <field name="confirm_status"/>
             </field>

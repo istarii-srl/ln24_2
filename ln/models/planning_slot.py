@@ -9,6 +9,7 @@ class PlanningSlot(models.Model):
     has_synced = fields.Boolean(string="Est sync avec présence", default=False)
     has_rest = fields.Boolean(string="Pause dans le shift", compute="_compute_rest")
     rest_time = fields.Float(string="Temps de pause", compute="_compute_rest")
+    synchro_attendance = fields.Boolean(string="Synchronisation avec Attendance", default=True)
 
     @api.depends('template_id')
     def _compute_rest(self):

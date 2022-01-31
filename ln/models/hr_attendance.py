@@ -9,6 +9,7 @@ class Attendance(models.Model):
     done_hours = fields.Float(string="Heures prestées", compute="_compute_done_hours", store=True)
     attendance_hours = fields.Float(string="Temps de travail", compute="_compute_worked_hours", store=True, readonly=True)
 
+
     rest_hours = fields.Float(string="Temps de pause", store=True)
     worked_hours = fields.Float(string="Heures légales", readonly=False)
     rule_id = fields.Many2one(string="Règle", comodel_name="ln.attendance.rule")

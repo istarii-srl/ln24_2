@@ -19,7 +19,7 @@ class PresenceCron(models.Model):
         _logger.info(str(len(slots)))
         for slot in slots:
             _logger.info("in slot")
-            if slot.employee_id and not slot.has_synced:
+            if slot.employee_id and not slot.has_synced and slot.synchro_attendance:
                 #try:
                 if slot.start_datetime.date() != slot.end_datetime.date():
                     attendance = self.env["hr.attendance"].create({

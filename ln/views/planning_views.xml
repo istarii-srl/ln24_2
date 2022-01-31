@@ -15,10 +15,7 @@
                 <attribute name="decoration-danger">overlap_slot_count > 0 or confirm_status == 'refused'</attribute>
             </xpath>
             <xpath expr="//gantt" position="attributes">
-                <attribute name="decoration-info">confirm_status == 'to_assign'</attribute>
-            </xpath>
-            <xpath expr="//gantt" position="attributes">
-                <attribute name="decoration-secondary">confirm_status == 'confirmed'</attribute>
+                <attribute name="decoration-secondary">confirm_status == 'to_assign'</attribute>
             </xpath> 
         </field>
     </record>
