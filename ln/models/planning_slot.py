@@ -36,5 +36,5 @@ class PlanningSlot(models.Model):
     def _on_resource_changed(self):
         for slot in self:
             if slot.resource_id:
-                return {'domain': {'role_id': [('id', 'in', slot.resource_id.planning_role_ids.ids)]}}
+                return {'domain': {'role_id': [('id', 'in', slot.resource_id.employee_single_id.planning_role_ids.ids)]}}
 
