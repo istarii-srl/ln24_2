@@ -11,7 +11,7 @@
 }
 
 .o_gant_pill {
-  &.decoration-info::before {
+  .decoration-info::before {
     content: none !important;
   }
 }
