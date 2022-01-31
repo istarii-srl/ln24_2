@@ -9,15 +9,19 @@
         }
       }
     }
-
-    .decoration-secondary::before{
-        content: '';
-        @include size(20px, 16px);
-        @include o-position-absolute(-11px, $left: -13px);
-        box-shadow: 1px 1px 0 white;
-        background: rgba($color: blue, $alpha: 0.8);
-        transform: rotate(45deg);
-    }
-
   }
+}
+
+.o_gantt_pill.decoration-secondary:before {
+  content: "";
+  width: 20px;
+  height: 16px;
+  position: absolute;
+  top: -11px;
+  left: -13px;
+  bottom: auto;
+  right: auto;
+  box-shadow: 1px 1px 0 white;
+  background: #232db4;
+  transform: rotate(45deg);
 }
