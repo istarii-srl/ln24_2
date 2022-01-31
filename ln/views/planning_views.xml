@@ -9,15 +9,9 @@
             </field>
 
             <xpath expr="//gantt" position="attributes">
-                <attribute name="decoration-danger">overlap_slot_count > 0 or confirm_status == 'refused'</attribute>
-            </xpath>
-            <xpath expr="//gantt" position="attributes">
                 <attribute name="decoration-secondary">confirm_status == 'to_assign'</attribute>
-            </xpath>
-            <xpath expr="//gantt" position="attributes">
+                <attribute name="decoration-danger">overlap_slot_count > 0 or confirm_status == 'refused'</attribute>
                 <attribute name="decoration-warning">confirm_status == 'to_confirm'</attribute>
-            </xpath>
-            <xpath expr="//gantt" position="attributes">
                 <attribute name="decoration-info">state == 'draft'</attribute>
             </xpath>
         </field>
