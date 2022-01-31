@@ -116,7 +116,7 @@ class AttendanceCondition(models.Model):
                     text += str(condi.percentage*100)
                     text += "%"
                 else:
-                    text += str(condi.fixed_valued)
+                    text += str(condi.fixed_value)
 
                 condi.name = text
 
