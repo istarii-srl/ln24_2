@@ -5,25 +5,12 @@ class PlanningSlot(models.Model):
     _inherit = "planning.slot"
 
     slot_to_confirm = fields.Boolean(string="Slot à confirmer", default=True)
-    confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_assign", "À assigner"), ("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_assign", readonly=False)
-    confirm_status_auto = fields.Selection(string="Statut de confirmation", selection=[("to_assign", "À assigner"), ("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], compute="_compute_confirm_status")
+    confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_assign", readonly=False)
     has_synced = fields.Boolean(string="Est sync avec présence", default=False)
     has_rest = fields.Boolean(string="Pause dans le shift", compute="_compute_rest")
     rest_time = fields.Float(string="Temps de pause", compute="_compute_rest")
     synchro_attendance = fields.Boolean(string="Synchronisation avec Attendance", default=True)
 
-
-    @api.depends('resource_id', 'role_id')
-    def _compute_confirm_status(self):
-        for slot in self:
-            if slot.resource_id and slot.confirm_status_auto == "to_assign":
-                slot.confirm_status_auto = "to_confirm"
-                slot.confirm_status = "to_confirm"
-            elif not slot.resource_id and slot.confirm_status_auto != "to_assign":
-                slot.confirm_status_auto = "to_assign"
-                slot.confirm_status = "to_assign"
-            else:
-                slot.confirm_status_auto = slot.confirm_status
 
     @api.depends('template_id')
     def _compute_rest(self):
@@ -48,10 +35,14 @@ class PlanningSlot(models.Model):
         for slot in self:
             if slot.role_id:
                 return {'domain': {'resource_id': [('employee_single_id', 'in', slot.role_id.employee_ids.ids)]}}
+            else:
+                return {'domain': {'resource_id': [('id', '!=', -1)]}}
 
     @api.onchange('resource_id')
     def _on_resource_changed(self):
         for slot in self:
             if slot.resource_id:
                 return {'domain': {'role_id': [('id', 'in', slot.resource_id.employee_single_id.planning_role_ids.ids)]}}
+            else:
+                return {'domain': {'role_id': [('id', '!=', -1)]}}
 
