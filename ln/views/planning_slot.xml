@@ -7,7 +7,7 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="planning.planning_view_form"/>
         <field name="arch" type="xml">
-            <field name="resource_id" position="before">
+            <field name="role_id" position="after">
                 <field name="refresh_box"/>
             </field>
             <field name="allow_template_creation" position="after">
