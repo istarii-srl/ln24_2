@@ -25,6 +25,10 @@ class PlanningSlot(models.Model):
                 slot.has_rest = False
                 slot.rest_time = 0.0
 
+    def change_domain(self):
+        for slot in self:
+            return slot.on_domain_changed()
+
     
     @api.onchange('role_id', 'resource_id', 'refresh_box')
     def on_domain_changed(self):

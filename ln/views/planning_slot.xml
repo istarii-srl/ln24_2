@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="planning.planning_view_form"/>
         <field name="arch" type="xml">
             <field name="role_id" position="after">
-                <button name="on_domain_changed" type="object" string="Refresh"/>
+                <button name="change_domain" type="object" string="Refresh"/>
             </field>
             <field name="allow_template_creation" position="after">
                 <field name="slot_to_confirm" invisible="1"/>
