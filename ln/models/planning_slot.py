@@ -14,7 +14,7 @@ class PlanningSlot(models.Model):
     synchro_attendance = fields.Boolean(string="Synchronisation avec Attendance", default=True)
     fake_compute = fields.Boolean(compute="_compute_domain")
 
-    @api.depends('rest_time')
+    @api.depends('synchro_attendance')
     def _compute_domain(self):
         for slot in self:
             slot.fake_compute = True
