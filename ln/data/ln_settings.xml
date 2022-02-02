@@ -9,8 +9,8 @@
         <record id="ln_frame_pre_six" model="ln.attendance.frame">
             <field name="name">Avant 6h</field>
             <field name="all_day">0</field>
-            <field name="end_hour">5</field>
-            <field name="end_minute">59</field>
+            <field name="end_hour">6</field>
+            <field name="end_minute">0</field>
         </record>
 
         <record id="ln_frame_post_six" model="ln.attendance.frame">

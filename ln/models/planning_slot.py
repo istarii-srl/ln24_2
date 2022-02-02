@@ -29,7 +29,7 @@ class PlanningSlot(models.Model):
     def _on_role_changed(self):
         for slot in self:
             if slot.role_id:
-                slots = self.env["planing.slot"].search([("start_datetime", ">", slot.start_datetime - datetime.timedelta(days=2)), ("end_datetime", "<", slot.end_datetime + datetime.timedelta(days=2))])
+                slots = self.env["planning.slot"].search([("start_datetime", ">", slot.start_datetime - datetime.timedelta(days=2)), ("end_datetime", "<", slot.end_datetime + datetime.timedelta(days=2))])
                 employee_ids = slot.role_id.employee_ids.ids
                 for slot_near in slots:
                     if (slot_near.start_datetime < slot.start_datetime and slot_near.end_datetime > slot.end_datetime) or (slot_near.start_datetime >= slot.start_datetime and slot_near.start_datetime <= slot.end_datetime) or (slot_near.end_datetime >= slot.start_datetime and slot_near.end_datetime <= slot.end_datetime):
