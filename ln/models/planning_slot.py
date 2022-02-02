@@ -4,6 +4,8 @@ class PlanningSlot(models.Model):
     _name = "planning.slot"
     _inherit = "planning.slot"
 
+    role_id = fields.Many2one(domain=lambda self: self._on_resource_changed())
+    resource_id = fields.Many2one(domain= lambda self: self._on_role_changed())
     slot_to_confirm = fields.Boolean(string="Slot à confirmer", default=True)
     confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_assign", readonly=False)
     has_synced = fields.Boolean(string="Est sync avec présence", default=False)
