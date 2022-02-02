@@ -33,18 +33,12 @@ class PlanningSlot(models.Model):
     #            slot.confirm_status = 'to_assign'
 
     def default_on_role_changed(self):
-        for slot in self:
-            #if slot.role_id:
-            return [('employee_single_id', 'in', slot.role_id.employee_ids.ids)]
+        return [('employee_single_id', 'in', self.role_id.employee_ids.ids)]
             #else:
             #    return [('id', '!=', -1)]
 
     def default_on_resource_changed(self):
-        for slot in self:
-            #if slot.resource_id:
-            return [('id', 'in', slot.resource_id.employee_single_id.planning_role_ids.ids)]
-            #else:
-            #    return [('id', '!=', -1)]
+        return [('id', 'in', self.resource_id.employee_single_id.planning_role_ids.ids)]
 
     
     @api.onchange('role_id')
