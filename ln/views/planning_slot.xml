@@ -7,8 +7,8 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="planning.planning_view_form"/>
         <field name="arch" type="xml">
-            <field name="role_id" position="after">
-                <button name="change_domain" type="object" string="Refresh"/>
+            <field name="resource_id" position="before">
+                <field name="refresh_box"/>
             </field>
             <field name="allow_template_creation" position="after">
                 <field name="slot_to_confirm" invisible="1"/>
@@ -16,7 +16,7 @@
                 <field name="synchro_attendance"/>
                 <field name="has_rest"/>
                 <field name="confirm_status"/>
-                <field name="refresh_box"/>
+
             </field>
             <field name="allocated_hours" position="after">
                 <field name="rest_time" widget="float_time" attrs="{'invisible': [('has_rest', '=', False)]}"/>
