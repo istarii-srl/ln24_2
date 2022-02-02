@@ -160,11 +160,11 @@ class AttendanceFrame(models.Model):
 
     def get_overlapping_hours(self, check_in, check_out):
         for frame in self:
-            frame_start = datetime.datetime(check_in.year, check_in.month, check_in.day, frame.start_hour, frame.start_minute)
+            frame_start = datetime.datetime(check_in.year, check_in.month, check_in.day, frame.start_hour, frame.start_minute) - datetime.timedelta(seconds=3600)
             if frame.end_hour == 23 and frame.end_minute == 59:
-                frame_end = datetime.datetime(check_out.year, check_out.month, check_out.day, 0, 0) + datetime.timedelta(days=1)
+                frame_end = datetime.datetime(check_out.year, check_out.month, check_out.day, 0, 0) + datetime.timedelta(days=1) - datetime.timedelta(seconds=3600)
             else:
-                frame_end = datetime.datetime(check_out.year, check_out.month, check_out.day, frame.end_hour, frame.end_minute)
+                frame_end = datetime.datetime(check_out.year, check_out.month, check_out.day, frame.end_hour, frame.end_minute) - datetime.timedelta(seconds=3600)
             if frame.all_day:
                 return (check_out - check_in).total_seconds() / 60.0 / 60.0 
             if check_in >= frame_end:

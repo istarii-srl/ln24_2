@@ -1,4 +1,5 @@
 from odoo import fields, api, models
+import datetime
 
 class PlanningSlot(models.Model):
     _name = "planning.slot"
@@ -28,7 +29,13 @@ class PlanningSlot(models.Model):
     def _on_role_changed(self):
         for slot in self:
             if slot.role_id:
-                return {'domain': {'resource_id': [('employee_single_id', 'in', slot.role_id.employee_ids.ids)]}}
+                slots = self.env["planing.slot"].search([("start_datetime", ">", slot.start_datetime - datetime.timedelta(days=2)), ("end_datetime", "<", slot.end_datetime + datetime.timedelta(days=2))])
+                employee_ids = slot.role_id.employee_ids.ids
+                for slot_near in slots:
+                    if (slot_near.start_datetime < slot.start_datetime and slot_near.end_datetime > slot.end_datetime) or (slot_near.start_datetime >= slot.start_datetime and slot_near.start_datetime <= slot.end_datetime) or (slot_near.end_datetime >= slot.start_datetime and slot_near.end_datetime <= slot.end_datetime):
+                        if slot_near.resource_id and slot_near.resource_id.employee_single_id.id in employee_ids:
+                            employee_ids.remove(slot_near.resource_id.employee_single_id.id)
+                return {'domain': {'resource_id': [('employee_single_id', 'in', employee_ids)]}}
             else:
                 return {'domain': {'resource_id': [('id', '!=', -1)]}}
 
