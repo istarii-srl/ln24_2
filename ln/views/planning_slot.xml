@@ -7,9 +7,6 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="planning.planning_view_form"/>
         <field name="arch" type="xml">
-            <header>
-                <button name="on_domain_changed" type="object" string="Refresh" class="oe_highlight"/>
-            </header>
             <field name="allow_template_creation" position="after">
                 <field name="slot_to_confirm" invisible="1"/>
                 <field name="has_synced" invisible="1"/>
@@ -23,4 +20,17 @@
             </field>
         </field>
     </record>
+
+    <record id="planning_view_form_in_gantt" model="ir.ui.view">
+        <field name="name">ln.planning.slot.form.gantt</field>
+        <field name="model">planning.slot</field>
+        <field name="inherit_id" ref="planning.planning_view_form_in_gantt"/>
+        <field name="arch" type="xml">
+            <button name="action_unpublish" position="after">
+                <button name="on_domain_changed" type="object" string="Refresh" class="oe_highlight"/>
+            </button>
+        </field>
+    </record>
+
+
 </odoo>
