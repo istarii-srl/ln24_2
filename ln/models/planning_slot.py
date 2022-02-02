@@ -4,8 +4,8 @@ class PlanningSlot(models.Model):
     _name = "planning.slot"
     _inherit = "planning.slot"
 
-    role_id = fields.Many2one(domain=lambda self: self.default_on_resource_changed())
-    resource_id = fields.Many2one(domain= lambda self: self.default_on_role_changed())
+    role_id = fields.Many2one(domain=lambda self: ['|', ('id', 'in', self.resource_id.employee_single_id.planning_role_ids.ids), "&", (self.resource_id, '=', False), ('id', '!=' -1)])
+    resource_id = fields.Many2one(domain= lambda self: ['|', ('employee_single_id', 'in', self.role_id.employee_ids.ids), "&", (self.role_id, "=", False), ("id", "!=", -1)])
     slot_to_confirm = fields.Boolean(string="Slot à confirmer", default=True)
     confirm_status = fields.Selection(string="Statut de confirmation", selection=[("to_confirm", "À confirmer"), ('refused', 'Refusé'), ("confirmed", 'Confirmé')], default="to_confirm", readonly=False)
     has_synced = fields.Boolean(string="Est sync avec présence", default=False)
@@ -32,28 +32,28 @@ class PlanningSlot(models.Model):
     #        else:
     #            slot.confirm_status = 'to_assign'
 
-    def default_on_role_changed(self):
-        return [('employee_single_id', 'in', self.role_id.employee_ids.ids)]
-            #else:
-            #    return [('id', '!=', -1)]
+    #def default_on_role_changed(self):
+    #    return [('employee_single_id', 'in', self.role_id.employee_ids.ids)]
+    #        #else:
+    #        #    return [('id', '!=', -1)]
 
-    def default_on_resource_changed(self):
-        return [('id', 'in', self.resource_id.employee_single_id.planning_role_ids.ids)]
+    #def default_on_resource_changed(self):
+    #    return [('id', 'in', self.resource_id.employee_single_id.planning_role_ids.ids)]
 
     
-    @api.onchange('role_id')
-    def _on_role_changed(self):
-        for slot in self:
-            if slot.role_id:
-                return {'domain': {'resource_id': [('employee_single_id', 'in', slot.role_id.employee_ids.ids)]}}
-            else:
-                return {'domain': {'resource_id': [('id', '!=', -1)]}}
+    #@api.onchange('role_id')
+    #def _on_role_changed(self):
+    #    for slot in self:
+    #        if slot.role_id:
+    #            return {'domain': {'resource_id': [('employee_single_id', 'in', slot.role_id.employee_ids.ids)]}}
+    #        else:
+    #            return {'domain': {'resource_id': [('id', '!=', -1)]}}
 
-    @api.onchange('resource_id')
-    def _on_resource_changed(self):
-        for slot in self:
-            if slot.resource_id:
-                return {'domain': {'role_id': [('id', 'in', slot.resource_id.employee_single_id.planning_role_ids.ids)]}}
-            else:
-                return {'domain': {'role_id': [('id', '!=', -1)]}}
+    #@api.onchange('resource_id')
+    #def _on_resource_changed(self):
+    #    for slot in self:
+    #        if slot.resource_id:
+    #            return {'domain': {'role_id': [('id', 'in', slot.resource_id.employee_single_id.planning_role_ids.ids)]}}
+    #        else:
+    #            return {'domain': {'role_id': [('id', '!=', -1)]}}
 
