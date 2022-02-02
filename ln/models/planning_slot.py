@@ -11,6 +11,7 @@ class PlanningSlot(models.Model):
     has_rest = fields.Boolean(string="Pause dans le shift", compute="_compute_rest")
     rest_time = fields.Float(string="Temps de pause", compute="_compute_rest")
     synchro_attendance = fields.Boolean(string="Synchronisation avec Attendance", default=True)
+    refresh_box = fields.Boolean(string="Refresh", default=False)
 
                  
 
@@ -25,8 +26,8 @@ class PlanningSlot(models.Model):
                 slot.rest_time = 0.0
 
     
-    @api.onchange('role_id')
-    def _on_role_changed(self):
+    @api.onchange('role_id', 'resource_id', 'refresh_box')
+    def _on_domain_changed(self):
         for slot in self:
             if slot.role_id:
                 slots = self.env["planning.slot"].search([("start_datetime", ">", slot.start_datetime - datetime.timedelta(days=2)), ("end_datetime", "<", slot.end_datetime + datetime.timedelta(days=2))])
@@ -35,15 +36,20 @@ class PlanningSlot(models.Model):
                     if (slot_near.start_datetime < slot.start_datetime and slot_near.end_datetime > slot.end_datetime) or (slot_near.start_datetime >= slot.start_datetime and slot_near.start_datetime <= slot.end_datetime) or (slot_near.end_datetime >= slot.start_datetime and slot_near.end_datetime <= slot.end_datetime):
                         if slot_near.resource_id and slot_near.resource_id.employee_single_id.id in employee_ids:
                             employee_ids.remove(slot_near.resource_id.employee_single_id.id)
-                return {'domain': {'resource_id': [('employee_single_id', 'in', employee_ids)]}}
-            else:
-                return {'domain': {'resource_id': [('id', '!=', -1)]}}
-
-    @api.onchange('resource_id')
-    def _on_resource_changed(self):
-        for slot in self:
-            if slot.resource_id:
+                if slot.resource_id:
+                    return {'domain': {'resource_id': [('employee_single_id', 'in', employee_ids)], 'role_id': [('id', 'in', slot.resource_id.employee_single_id.planning_role_ids.ids)]}}
+                else:
+                    return  {'domain': {'resource_id': [('employee_single_id', 'in', employee_ids)]}}
+            elif slot.resource_id:
                 return {'domain': {'role_id': [('id', 'in', slot.resource_id.employee_single_id.planning_role_ids.ids)]}}
             else:
-                return {'domain': {'role_id': [('id', '!=', -1)]}}
+                return {'domain': {'resource_id': [('id', '!=', -1)], 'role_id': [('id', '!=', -1)]}}
+
+    #@api.onchange('')
+    #def _on_resource_changed(self):
+    #    for slot in self:
+    #        if slot.resource_id:
+    #            return {'domain': {'role_id': [('id', 'in', slot.resource_id.employee_single_id.planning_role_ids.ids)]}}
+    #        else:
+    #            return {'domain': {'role_id': [('id', '!=', -1)]}}
 
