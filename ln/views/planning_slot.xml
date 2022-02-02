@@ -7,6 +7,9 @@
         <field eval="8" name="priority"/>
         <field name="inherit_id" ref="planning.planning_view_form"/>
         <field name="arch" type="xml">
+            <header>
+                <button name="on_domain_changed" type="object" string="Refresh" class="oe_highlight"/>
+            </header>
             <field name="allow_template_creation" position="after">
                 <field name="slot_to_confirm" invisible="1"/>
                 <field name="has_synced" invisible="1"/>

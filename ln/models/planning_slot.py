@@ -27,7 +27,7 @@ class PlanningSlot(models.Model):
 
     
     @api.onchange('role_id', 'resource_id', 'refresh_box')
-    def _on_domain_changed(self):
+    def on_domain_changed(self):
         for slot in self:
             if slot.role_id:
                 slots = self.env["planning.slot"].search([("start_datetime", ">", slot.start_datetime - datetime.timedelta(days=2)), ("end_datetime", "<", slot.end_datetime + datetime.timedelta(days=2))])
