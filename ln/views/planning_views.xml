@@ -7,7 +7,6 @@
         <field name="arch" type="xml">
             <field name="allocated_hours" position="after">
                 <field name="confirm_status" invisible="1"/>
-                <field name="fake_compute" invisible="1"/>
             </field>
 
             <xpath expr="//gantt" position="attributes">
