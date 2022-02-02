@@ -17,13 +17,13 @@ class PlanningSlot(models.Model):
         if self.resource_id:
             return self.resource_id.employee_single_id.planning_role_ids.ids
         else:
-            return self.env["planning.role"].search().ids
+            return self.env["planning.role"].search([]).ids
     
     def _get_resource_ids(self):
         if self.role_id:
             return self.role_id.employee_ids.ids
         else:
-            return self.env["hr.employee"].search().ids
+            return self.env["hr.employee"].search([]).ids
 
                  
 
